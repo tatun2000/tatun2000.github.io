@@ -1,0 +1,14 @@
+<script src="https://pxl.dmitry-borisenko.dev.altkraft.com/ak_container.js?id=MXw1" ></script>
+<button id="init_sub">Подписаться на уведомления</button>
+ 
+<script>
+    document.getElementById('init_sub').addEventListener('click', function() {
+    try {
+        var akPush = new AKPush();
+        akPush.initSubscription()
+        }
+    catch (e) {
+        console.log(e);
+        }
+    });
+</script>
