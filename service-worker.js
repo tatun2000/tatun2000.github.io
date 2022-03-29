@@ -1,0 +1,1 @@
+importScripts('https://pxl.dmitry-borisenko.dev.altkraft.com/service-worker.js?id=MXw1');
