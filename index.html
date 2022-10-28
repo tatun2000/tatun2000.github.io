@@ -1,21 +1,51 @@
-<script src="https://pxl.dmitry-borisenko.dev.altkraft.com/ak_container.js?id=MXw1" ></script>
-<button id="init_sub">Подписаться на уведомления</button>
- 
-<script>
-    document.getElementById('init_sub').addEventListener('click', function() {
-    try {
-        var akPush = new AKPush();
-        akPush.initSubscription()
-        }
-    catch (e) {
-        console.log(e);
-        }
-    });
-</script>
+const createAndPushPixel = function (tags, goalValue, matchingParams, timeout) {
+    const url =
+        'https://pxl.dmitry-borisenko.dev.altkraft.com/pixel?k=34FyFph%2BVuzFYrhPh7C10Nk7Jg3MJUl1m%2Fqui6fGQJa6XD9SM9jghQ%3D%3D&s=XZCMwL8NN%2B8%3D'
 
+    const goals = (Array.isArray(tags) ?  [...tags] : [tags]).map((tag) => encodeURIComponent(tag)).join(',')
+    const value = encodeURIComponent(String(goalValue || 0))
+    const matchingMode = encodeURIComponent(matchingParams.matchingMode || '')
+    const dbId = encodeURIComponent(matchingParams.dbId || 0)
+    const match = encodeURIComponent(JSON.stringify(matchingParams.match || {}))
+    const update = encodeURIComponent(JSON.stringify(matchingParams.update || {}))
+    setTimeout(() => {
+        new Image().src = [
+            url,
+            `goals=${goals}`,
+            `value=${value}`,
+            `db_id=${dbId}`,
+            `mmode=${matchingMode}`,
+            `match=${match}`,
+            `update=${update}`
+        ].join('&')
+    }, timeout)
+}
 
-<!-- START OF ALTCRAFT PIXEL CODE !-->
-<script type="text/javascript">
- !function(){var e={url:"https://pxl.dmitry-borisenko.dev.altkraft.com/pixel?k=34FyFph%2BVuzFYrhPh7C10Nk7Jg3MJUl1m%2Fqui6fGQJa6XD9SM9jghQ%3D%3D&s=XZCMwL8NN%2B8%3D",goals:"",value:parseFloat("0"),timeout:parseInt("0"),after_scroll:JSON.parse("false"),auto_load:JSON.parse("true")},o=function(o,t,n,a){var d=[].concat(o).map(function(e){return encodeURIComponent(e)}).join(","),c=encodeURIComponent(String(t||0)),i=encodeURIComponent(n.matching_mode||""),r=encodeURIComponent(n.db_id||0),u=encodeURIComponent(JSON.stringify(n.match||{})),l=encodeURIComponent(JSON.stringify(n.update||{}));setTimeout(function(){(new Image).src=[e.url,"goals="+d,"value="+c,"db_id="+r,"mmode="+i,"match="+u,"update="+l].join("&")},a)},t=!1,n=function(){t||(t=!0,e.after_scroll?document.addEventListener("scroll",function(){(window.pageYOffset||document.documentElement.scrollTop>0)&&o(e.goals,e.value,{},e.timeout)}):e.auto_load&&o(e.goals,e.value,{},e.timeout))};"complete"===document.readyState||"interactive"===document.readyState?n():window.addEventListener("load",n);window.ak_pixel_push=function(e,t,n,a,d,c){var i=[];Array.isArray(e)?i=e:i[0]=e,o(i,t,{match:n,update:a,matching_mode:d,db_id:c},0)}}();
-</script>
-<!-- END OF ALTCRAFT PIXEL CODE !-->
+const altcraftPixelPush = (
+    tags,
+    goalValue,
+    clientId
+) => {
+    const arrTags = Array.isArray(tags) ? tags : [tags]
+
+    const update = {}
+    const matchingMode = 'email'
+    const dbId = 11
+    const match = {
+        db_id: 11,
+        field_name: 'email',
+        field_value: clientId
+    }
+
+    createAndPushPixel(
+        arrTags,
+        goalValue,
+        {
+            match,
+            update,
+            matchingMode,
+            dbId
+        },
+        0
+    )
+}
