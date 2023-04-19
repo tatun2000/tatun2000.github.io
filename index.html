@@ -109,6 +109,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         var dl = dataLayerName !== 'acDataLayer' ? '&l=' + dataLayerName : '';
         script.async = true;
         script.src = 'https://pxl.dmitry-borisenko.dev.altkraft.com/actm/actm.js?id=' + containerID + dl;
+        script.type = 'module';
         if (firstScript && firstScript.parentNode) {
             firstScript.parentNode.insertBefore(script, firstScript);
         }
